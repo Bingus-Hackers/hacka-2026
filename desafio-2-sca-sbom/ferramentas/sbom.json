@@ -1,0 +1,268 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:ac5e4d0e-94a9-473c-b6c6-fbd3913eb59b",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-05-16T12:30:36+00:00",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "group": "aquasecurity",
+          "name": "trivy",
+          "version": "0.58.1"
+        }
+      ]
+    },
+    "component": {
+      "bom-ref": "0f675266-3bf5-4631-83ea-a5c9ba0900e2",
+      "type": "application",
+      "name": "agente-alvo",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:SchemaVersion",
+          "value": "2"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "d00a8060-7c14-4ddd-bf7f-02c45a7facd2",
+      "type": "application",
+      "name": "pom.xml",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:Class",
+          "value": "lang-pkgs"
+        },
+        {
+          "name": "aquasecurity:trivy:Type",
+          "value": "pom"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/br.hackathon.banco/agente-bancario@1.0.0-baseline",
+      "type": "library",
+      "group": "br.hackathon.banco",
+      "name": "agente-bancario",
+      "version": "1.0.0-baseline",
+      "purl": "pkg:maven/br.hackathon.banco/agente-bancario@1.0.0-baseline",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "br.hackathon.banco:agente-bancario:1.0.0-baseline"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pom"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.12.7.1",
+      "type": "library",
+      "group": "com.fasterxml.jackson.core",
+      "name": "jackson-databind",
+      "version": "2.12.7.1",
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.12.7.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "com.fasterxml.jackson.core:jackson-databind:2.12.7.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pom"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/com.h2database/h2@1.4.200",
+      "type": "library",
+      "group": "com.h2database",
+      "name": "h2",
+      "version": "1.4.200",
+      "purl": "pkg:maven/com.h2database/h2@1.4.200",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "com.h2database:h2:1.4.200"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pom"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.netty/netty-handler@4.1.77.Final",
+      "type": "library",
+      "group": "io.netty",
+      "name": "netty-handler",
+      "version": "4.1.77.Final",
+      "purl": "pkg:maven/io.netty/netty-handler@4.1.77.Final",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "io.netty:netty-handler:4.1.77.Final"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pom"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.commons/commons-text@1.9",
+      "type": "library",
+      "group": "org.apache.commons",
+      "name": "commons-text",
+      "version": "1.9",
+      "purl": "pkg:maven/org.apache.commons/commons-text@1.9",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "org.apache.commons:commons-text:1.9"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pom"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.0",
+      "type": "library",
+      "group": "org.apache.logging.log4j",
+      "name": "log4j-core",
+      "version": "2.14.0",
+      "purl": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "org.apache.logging.log4j:log4j-core:2.14.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pom"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework.boot/spring-boot-starter-data-jpa",
+      "type": "library",
+      "group": "org.springframework.boot",
+      "name": "spring-boot-starter-data-jpa",
+      "purl": "pkg:maven/org.springframework.boot/spring-boot-starter-data-jpa",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "org.springframework.boot:spring-boot-starter-data-jpa"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pom"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework.boot/spring-boot-starter-web",
+      "type": "library",
+      "group": "org.springframework.boot",
+      "name": "spring-boot-starter-web",
+      "purl": "pkg:maven/org.springframework.boot/spring-boot-starter-web",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "org.springframework.boot:spring-boot-starter-web"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pom"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.yaml/snakeyaml@1.30",
+      "type": "library",
+      "group": "org.yaml",
+      "name": "snakeyaml",
+      "version": "1.30",
+      "purl": "pkg:maven/org.yaml/snakeyaml@1.30",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "org.yaml:snakeyaml:1.30"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pom"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "0f675266-3bf5-4631-83ea-a5c9ba0900e2",
+      "dependsOn": [
+        "d00a8060-7c14-4ddd-bf7f-02c45a7facd2"
+      ]
+    },
+    {
+      "ref": "d00a8060-7c14-4ddd-bf7f-02c45a7facd2",
+      "dependsOn": [
+        "pkg:maven/br.hackathon.banco/agente-bancario@1.0.0-baseline",
+        "pkg:maven/org.springframework.boot/spring-boot-starter-data-jpa",
+        "pkg:maven/org.springframework.boot/spring-boot-starter-web"
+      ]
+    },
+    {
+      "ref": "pkg:maven/br.hackathon.banco/agente-bancario@1.0.0-baseline",
+      "dependsOn": [
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.12.7.1",
+        "pkg:maven/com.h2database/h2@1.4.200",
+        "pkg:maven/io.netty/netty-handler@4.1.77.Final",
+        "pkg:maven/org.apache.commons/commons-text@1.9",
+        "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.0",
+        "pkg:maven/org.yaml/snakeyaml@1.30"
+      ]
+    },
+    {
+      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.12.7.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/com.h2database/h2@1.4.200",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/io.netty/netty-handler@4.1.77.Final",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.apache.commons/commons-text@1.9",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.springframework.boot/spring-boot-starter-data-jpa",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.springframework.boot/spring-boot-starter-web",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.yaml/snakeyaml@1.30",
+      "dependsOn": []
+    }
+  ],
+  "vulnerabilities": []
+}
