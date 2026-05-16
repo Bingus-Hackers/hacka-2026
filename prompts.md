@@ -24,11 +24,49 @@ Este arquivo registra todos os prompts enviados à IA assistente durante a audit
 - **Output:** Identificação de divergências de linhas e correção do relatório para 100% de conformidade.
 
 ## Prompt #4 — Auditoria Desafio 2 (SCA + SBOM)
-- **Role:** Analista de Segurança de Dependências e Auditor de Supply Chain.
-- **Task:** Executar Trivy sobre o Agente Bancário (Java/Spring Boot) e gerar SBOM em formato CycloneDX.
-- **Context:** Desafio 2 do Hackathon — análise de dependências Maven do Agente Bancário com `pom.xml` contendo bibliotecas antigas e CVEs reais.
-- **Constraints:** Usar exclusivamente CVEs presentes no `trivy-output.json`. Não inventar CVEs. Identificar explicitamente o Log4j. Gerar plano de atualização priorizado por janelas de tempo.
-- **Output:** Relatório `relatorio-sca-sbom.md` com Top 5 CVEs detalhadas, seção dedicada a Log4j, SBOM CycloneDX válido e plano de atualização em 3 janelas (24h, 7d, 30d).
+**[ROLE]**
+Você é um especialista em segurança cibernética e planejamento de projetos técnicos, com experiência em execução de desafios práticos em contextos de hackathon.
+
+---
+
+**[TASK]**
+Analisar o Desafio 2 de um hackathon de segurança cibernética a partir das fontes fornecidas, identificar seus objetivos, regras e critérios de sucesso, e produzir um plano de execução prático e faseado.
+
+---
+
+**[CONTEXT]**
+As fontes de informação sobre o desafio são:
+
+- **Google Drive** (documentos do hackathon): `https://drive.google.com/drive/folders/1kal6eR_iuzIJZwM0i45-iD4_N9aqyEGg`
+- **Texto do GitHub** sobre o hackathon: será fornecido diretamente pelo usuário no momento do uso
+
+Leia e cruze as duas fontes antes de responder. O contexto é um hackathon com prazos comprimidos (tipicamente 24–48 horas).
+
+---
+
+**[CONSTRAINTS]**
+- O plano deve respeitar integralmente todas as regras, restrições e critérios de avaliação identificados nas fontes — nenhuma regra pode ser ignorada ou assumida sem base nas fontes
+- As ações devem ser organizadas em fases sequenciais e viáveis dentro do tempo de hackathon
+- Não inventar requisitos: se algo não estiver explícito nas fontes, sinalize explicitamente como suposição
+- Separar claramente a seção de análise da seção de plano de execução na resposta
+
+---
+
+**[OUTPUT]**
+Resposta estruturada em duas seções distintas:
+
+**Seção 1 — Análise do Desafio 2**
+- Descrição do desafio e seu contexto
+- Objetivos específicos a alcançar
+- Regras e restrições a respeitar
+- Métricas ou critérios de sucesso definidos
+
+**Seção 2 — Plano de Execução**
+- Fases lógicas e sequenciais com ações concretas
+- Recursos, ferramentas e conhecimentos necessários por fase
+- Marcos críticos e pontos de verificação
+- Riscos previsíveis e como mitigá-los dentro do contexto do hackathon
+
 
 ## Prompt #5 — Auditoria Desafio 3 (SAST + Indirect Injection)
 Você é um especialista em planejamento técnico de projetos. Seu trabalho é analisar o desafio 3 do hackathon descrito em `README_SC.md` e criar um documento de planejamento detalhado e executável.
