@@ -1,0 +1,17 @@
+# Cursor Rules — Hackathon Cybersecurity Audit
+
+## Strict Constraints (Anti-Vibe-Security)
+- **NO MODIFICATION:** You are strictly forbidden from modifying or writing any files inside the `agente-alvo/` directory. This is a read-only directory for audit purposes only.
+- **EVIDENCE-BASED ONLY:** Do not invent vulnerabilities, CVEs, or CWEs. Every finding must be backed by tool output (Trivy, Semgrep) or direct line-by-line evidence from the source code/diff.
+- **LINE VALIDATION:** Always perform double validation of file paths and line numbers before reporting a finding.
+- **RTCCO COMPLIANCE:** Every prompt and instruction must follow the Role, Task, Context, Constraints, Output framework.
+
+## Ethical Guidelines
+- **LEGAL COMPLIANCE:** Adhere to Law 12.737/2012 (Carolina Dieckmann). All activities are for educational purposes within the hackathon environment.
+- **ISOLATION:** Payloads and PoCs must only be tested against the provided targets in this isolated environment.
+
+## Audit Workflow
+1. Run security tools (Trivy, Semgrep).
+2. Analyze output.
+3. Cross-reference with source code.
+4. Document with file name, line number, and impact.

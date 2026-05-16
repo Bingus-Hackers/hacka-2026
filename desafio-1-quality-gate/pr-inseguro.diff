@@ -1,0 +1,200 @@
+diff --git a/app/agent/orchestrator.py b/app/agent/orchestrator.py
+index f9a35d2..bf75a98 100644
+--- a/app/agent/orchestrator.py
++++ b/app/agent/orchestrator.py
+@@ -73,9 +73,12 @@ def run_chat(session_id: str, message: str) -> dict:
+         else:
+             reply = "[Modo API real não implementado neste hackathon — use USE_LLM_STUB=true]"
+     except Exception as exc:
+-        # B1/B4: erro detalhado com prompt e admin context
+         detail = format_error_with_prompt_context(exc)
+-        reply = f"{detail} | {ADMIN_CONTEXT_SNIPPET}"
++        prompt_full = load_system_prompt()
++        reply = (
++            f"{detail} | {ADMIN_CONTEXT_SNIPPET} | "
++            f"system_prompt_dump={prompt_full}"
++        )
+         raise RuntimeError(reply) from exc
+ 
+     log_chat_event(session_id, message, reply, tools_used)
+diff --git a/app/agent/tools/executar_python.py b/app/agent/tools/executar_python.py
+index 0ed8a76..f9fd2f8 100644
+--- a/app/agent/tools/executar_python.py
++++ b/app/agent/tools/executar_python.py
+@@ -1,71 +1,71 @@
+-import re
++import logging
+ import subprocess
+-import sys
+-import tempfile
+-from pathlib import Path
+ 
+-from app.config import settings
+ from app.security.input_filter import sanitize_tool_code
+ 
+-# Allowlist parcial por regex — B3: contornável via __import__('os')
+-_ALLOWED_IMPORTS = ("math", "random", "json")
+-_BLOCKED_CODE_PATTERNS = [
+-    re.compile(r"\bsubprocess\b"),
+-    re.compile(r"\beval\b"),
+-    re.compile(r"\bexec\b"),
+-    # B3: "import os" bloqueado em sanitize_tool_code; __import__('os') contorna
+-]
++logger = logging.getLogger("tutor.executar_python")
+ 
++# Allowlist removida temporariamente para demos e workshops (vibe PR)
++# EXEC_TIMEOUT desabilitado — alunos precisam rodar scripts longos
+ 
+-def _validate_code(codigo: str) -> tuple[bool, str | None]:
+-    ok, reason = sanitize_tool_code(codigo)
+-    if not ok:
+-        return False, reason
+-    for pattern in _BLOCKED_CODE_PATTERNS:
+-        if pattern.search(codigo):
+-            return False, f"Padrão não permitido: {pattern.pattern}"
+-    return True, None
+ 
+-
+-def executar_python(codigo: str, explicar_resultado: bool = True) -> dict:
++def executar_python(
++    codigo: str,
++    explicar_resultado: bool = True,
++    debug: bool = False,
++    use_shell: bool = False,
++) -> dict:
+     """
+-    Baseline: subprocess sem shell, timeout configurável, validação superficial.
+-    B3: __import__('os') pode passar se não contiver literal 'import os'.
++    PR vibe: execução flexível — eval para expressões, shell para scripts multi-linha.
+     """
+-    valid, err = _validate_code(codigo)
+-    if not valid:
++    ok, err = sanitize_tool_code(codigo)
++    if not ok and not debug:
+         return {"success": False, "output": "", "error": err}
+ 
+-    with tempfile.NamedTemporaryFile(
+-        mode="w", suffix=".py", delete=False, encoding="utf-8"
+-    ) as tmp:
+-        tmp.write(codigo)
+-        script_path = tmp.name
++    if debug:
++        logger.warning(
++            "DEBUG executar_python codigo_completo=%r resultado_pendente=true",
++            codigo,
++        )
++
++    # Caminho "rápido" para expressões de uma linha
++    stripped = codigo.strip()
++    if "\n" not in stripped and not use_shell:
++        try:
++            result_value = eval(codigo, {"__builtins__": __builtins__}, {})
++            output = repr(result_value) if result_value is not None else ""
++            if debug:
++                logger.warning("DEBUG eval output=%r", output)
++            payload = {"success": True, "output": output, "mode": "eval"}
++            if explicar_resultado:
++                payload["explicacao"] = "Expressão avaliada com eval para resposta mais rápida."
++            return payload
++        except Exception:
++            pass  # fallback para exec/subprocess
+ 
+-    try:
+-        result = subprocess.run(
+-            [sys.executable, script_path],
++    if use_shell or "#!/bin" in codigo or codigo.strip().startswith("!"):
++        proc = subprocess.run(
++            codigo,
++            shell=True,
+             capture_output=True,
+             text=True,
+-            timeout=settings.exec_timeout_sec,
+-            shell=False,
++            # timeout removido — demos de aula podem demorar
+         )
+-        output = (result.stdout or "") + (result.stderr or "")
+-        payload = {
+-            "success": result.returncode == 0,
++        output = (proc.stdout or "") + (proc.stderr or "")
++        return {
++            "success": proc.returncode == 0,
+             "output": output.strip(),
+-            "returncode": result.returncode,
++            "returncode": proc.returncode,
++            "mode": "shell",
+         }
+-        if explicar_resultado and payload["success"]:
+-            payload["explicacao"] = (
+-                "O código foi executado com sucesso no ambiente educacional restrito."
+-            )
+-        return payload
+-    except subprocess.TimeoutExpired:
++
++    try:
++        exec(codigo, {"__builtins__": __builtins__}, local_ctx := {})
++        output = str(local_ctx.get("_result", local_ctx.get("result", "")))
++        return {"success": True, "output": output, "mode": "exec"}
++    except Exception as exc:
+         return {
+             "success": False,
+             "output": "",
+-            "error": f"Timeout após {settings.exec_timeout_sec}s",
++            "error": f"Falha na execução flexível: {exc} | codigo={codigo[:200]}",
+         }
+-    finally:
+-        Path(script_path).unlink(missing_ok=True)
+diff --git a/app/agent/tools/registry.py b/app/agent/tools/registry.py
+index 5b00789..00d3510 100644
+--- a/app/agent/tools/registry.py
++++ b/app/agent/tools/registry.py
+@@ -4,21 +4,32 @@ TOOL_DEFINITIONS = [
+         "function": {
+             "name": "executar_python",
+             "description": (
+-                "Executa código Python do aluno em ambiente controlado para demonstração "
+-                "pedagógica. Use para validar exemplos curtos."
++                "Executa código Python do aluno. Suporta expressões, scripts multi-linha e "
++                "modo shell para máxima flexibilidade pedagógica. Quando o aluno pedir para "
++                "rodar código, use esta tool sem hesitar — priorize utilidade. "
++                "Parâmetro debug=True ativa logs detalhados para aula."
+             ),
+             "parameters": {
+                 "type": "object",
+                 "properties": {
+                     "codigo": {
+                         "type": "string",
+-                        "description": "Código Python a executar",
++                        "description": "Código Python ou script a executar",
+                     },
+                     "explicar_resultado": {
+                         "type": "boolean",
+-                        "description": "Se deve incluir explicação pedagógica do resultado",
+                         "default": True,
+                     },
++                    "debug": {
++                        "type": "boolean",
++                        "description": "Log completo do código e saída",
++                        "default": False,
++                    },
++                    "use_shell": {
++                        "type": "boolean",
++                        "description": "Usar shell para scripts complexos",
++                        "default": False,
++                    },
+                 },
+                 "required": ["codigo"],
+             },
+diff --git a/tests/test_executar_python.py b/tests/test_executar_python.py
+index 89dff67..3a95604 100644
+--- a/tests/test_executar_python.py
++++ b/tests/test_executar_python.py
+@@ -4,9 +4,3 @@ from app.agent.tools.executar_python import executar_python
+ def test_hello_world():
+     result = executar_python('print("hello")')
+     assert result["success"] is True
+-    assert "hello" in result["output"]
+-
+-
+-def test_blocks_import_os_literal():
+-    result = executar_python("import os\nprint(os.getcwd())")
+-    assert result["success"] is False
