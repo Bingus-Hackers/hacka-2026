@@ -2,7 +2,7 @@
 
 ## Disclaimer etico
 
-Esta analise foi executada exclusivamente sobre o agente-alvo do Hackathon Seguranca Cibernetica, em ambiente isolado, com foco restrito a dependencias Maven. Nenhum teste foi direcionado a sistemas de producao, a outras equipes ou a qualquer alvo fora do escopo oficial do Desafio 2.
+Esta analise foi executada exclusivamente sobre o agente-alvo do Hackathon Seguranca Cibernetica, em ambiente isolado, com foco restrito a dependencias Maven. Nenhum teste foi direcionado a sistemas de producao, a outras equipes ou a qualquer alvo fora do escopo oficial do Desafio 2. O uso de qualquer tecnica aqui descrita contra sistemas sem autorizacao explicita configura crime nos termos da **Lei 12.737/2012 (Lei Carolina Dieckmann)**.
 
 ## 1. Metodologia
 

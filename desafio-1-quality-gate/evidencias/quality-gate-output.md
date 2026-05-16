@@ -1,4 +1,4 @@
-# Evidências Técnicas de Auditoria — AI Security Quality Gate (Desafio 1) [ignoring loop detection]
+# Evidências Técnicas de Auditoria — AI Security Quality Gate (Desafio 1)
 
 **Data da Auditoria:** 2026-05-16
 **Agente-alvo:** Tutor de Programação (Python/Flask)
