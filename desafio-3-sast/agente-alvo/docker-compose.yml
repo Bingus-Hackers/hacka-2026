@@ -1,0 +1,10 @@
+services:
+  assistente-juridico:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      USE_LLM_STUB: "true"
+    volumes:
+      - ./data:/app/data
+      - ./uploads:/app/uploads

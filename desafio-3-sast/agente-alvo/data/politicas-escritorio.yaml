@@ -1,0 +1,10 @@
+escritorio: Silva & Hackathon Advogados (fictício)
+versao: 1.0-hackathon
+modelos_clausula:
+  confidencialidade: |
+    As partes comprometem-se a manter sigilo sobre informações trocadas,
+    pelo prazo de 24 meses após o término do contrato.
+  rescisao: |
+    Qualquer parte poderá rescindir mediante aviso prévio de 30 dias.
+  foro: |
+    Fica eleito o foro da Comarca de São Paulo/SP para dirimir controvérsias.
