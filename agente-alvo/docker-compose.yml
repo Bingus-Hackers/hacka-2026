@@ -1,0 +1,11 @@
+services:
+  tutor:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      USE_LLM_STUB: "true"
+      FLASK_APP: run:app
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
