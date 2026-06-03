@@ -101,8 +101,6 @@ O ataque foi mapeado para **OWASP LLM01:2025 — Prompt Injection (Indirect)** e
 
 Frameworks de referência utilizados: **OWASP LLM Top 10**, **CWE**, **CVSS v3.1**.
 
-Frameworks de referência utilizados: **OWASP LLM Top 10**, **CWE**, **CVSS v3.1**.
-
 ---
 
 ## Estrutura do Repositório
